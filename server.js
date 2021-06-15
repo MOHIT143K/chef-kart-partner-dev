@@ -1,17 +1,16 @@
 //Imports
+import http from "http";
+
 import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
 
-import http from "http";
+import dotenv from "dotenv";
+dotenv.config();
 
 import { initDb } from "./db.js";
 import router from "./router.js";
-
-import dotenv from 'dotenv';
-dotenv.config();
-
 
 //Initializing Express App
 const app = express();

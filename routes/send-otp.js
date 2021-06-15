@@ -1,4 +1,4 @@
-import { optService } from "./../config/config.js";
+import { optService, otpSenerId } from "./../config/config.js";
 import { getDb } from "../db.js";
 import { isValidPhoneNo } from "../helpers/utils.js";
 
