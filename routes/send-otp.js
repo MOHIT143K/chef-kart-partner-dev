@@ -12,8 +12,7 @@ export const sendOTP = async (req, res) => {
   optService.send(phoneNo, otpSenerId, async function (err, data) {
     const db = await getDb();
     if (data.type != "error") {
-      const user = db.collection("user").findOne({ phoneNo });
-
+      const user = await db.collection("user").findOne({ phoneNo });
       if (!user) {
         return res.status(200).send({ newUser: true });
       } else {
