@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
 import { getDb } from "./../db.js";
 import { optService, jwtSecretKey } from "./../config/config.js";
+import { createJWT } from "../helpers/create-decode-jwt.js";
 
 export const verifyOTP = async (req, res) => {
   const db = await getDb();
@@ -30,16 +30,13 @@ export const verifyOTP = async (req, res) => {
             .collection("user")
             .insertOne(userNode);
           const user = createdUserNode.result.ops[0];
-          const JWTForClient = jwt.sign(
-            { data: user["phoneNo"] },
-            jwtSecretKey
-          );
-          user.jwt = JWTForClient;
+          const JWTForClient = createJWT(user["phoneNo"]);
           return res.status(200).json({ jwt: JWTForClient, user });
         } catch (error) {
           if (error.code === 11000) {
             return res.status(422).send("User Already Exists!");
           }
+          return res.status(500).send('Server Error!');
         }
       } else {
         try {
@@ -52,12 +49,8 @@ export const verifyOTP = async (req, res) => {
             return res.status(404).send("User Not Present");
           }
 
-          const JWTForClient = jwt.sign(
-            { data: user["phoneNo"] },
-            jwtSecretKey
-          );
-          user.jwt = JWTForClient;
-          return res.status(200).json({ user });
+          const JWTForClient = createJWT(user["phoneNo"]);
+          return res.status(200).json({ jwt: JWTForClient, user });
         } catch (error) {
           console.log(error);
           return res.status(500).send("Server Error!");
