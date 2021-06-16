@@ -25,8 +25,8 @@ const cache = (duration) => {
 
 export default (app) => {
   app.get("/favicon.ico", (req, res) => res.status(204));
-  app.post(`/send-otp`, sendOTP);
-  app.post(`/verify-otp`, verifyOTP);
+  app.post(`/user/send-otp`, sendOTP);
+  app.post(`/user/verify-otp`, verifyOTP);
   app.get(`/check-health`, (req, res) => {
     return res.send("Working");
   });

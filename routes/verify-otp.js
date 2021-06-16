@@ -35,7 +35,7 @@ export const verifyOTP = async (req, res) => {
             jwtSecretKey
           );
           user.jwt = JWTForClient;
-          return res.status(200).json({ user });
+          return res.status(200).json({ jwt: JWTForClient, user });
         } catch (error) {
           if (error.code === 11000) {
             return res.status(422).send("User Already Exists!");
