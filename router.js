@@ -1,6 +1,6 @@
 import mcache from "memory-cache";
-import { authPhoneNoMiddleware } from "./middlwares/auth-phoneno-middleware.js";
-import { createLead } from "./routes/create-lead.js";
+import { authIdMiddleware } from "./middlwares/auth-id-middleware.js";
+import { createLead } from "./routes/user/create-lead.js";
 import { sendOTP } from "./routes/send-otp.js";
 import { verifyOTP } from "./routes/verify-otp.js";
 
@@ -29,7 +29,7 @@ export default (app) => {
   app.get("/favicon.ico", (req, res) => res.status(204));
   app.post(`/user/send-otp`, sendOTP);
   app.post(`/user/verify-otp`, verifyOTP);
-  app.get(`/lead/create-lead`, authPhoneNoMiddleware, createLead);
+  app.post(`/user/create-lead`, authIdMiddleware, createLead);
   app.get(`/check-health`, (req, res) => {
     return res.send("Working");
   });

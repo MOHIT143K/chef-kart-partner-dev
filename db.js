@@ -2,7 +2,7 @@ import assert from "assert";
 import mongodb from "mongodb";
 import { dbName, mongoConnectionString } from "./config/config.js";
 
-const { MongoClient } = mongodb;
+const { MongoClient, ObjectID } = mongodb;
 
 let _db;
 
@@ -32,3 +32,5 @@ export const getDb = () => {
   assert.ok(_db, "Db has not been initialized. Please called init first.");
   return _db;
 };
+
+export const ObjectId = ObjectID;

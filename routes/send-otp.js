@@ -1,18 +1,18 @@
-import { optService, otpSenerId } from "./../config/config.js";
+import { optService, otpSenerId } from "../config/config.js";
 import { getDb } from "../db.js";
-import { isValidPhoneNo } from "../helpers/utils.js";
+import { isValidMobileNo } from "../helpers/utils.js";
 
 export const sendOTP = async (req, res) => {
-  const { phoneNo } = req.body;
+  const { mobileNo } = req.body;
 
-  if (!phoneNo || !isValidPhoneNo(phoneNo)) {
+  if (!mobileNo || !isValidMobileNo(mobileNo)) {
     return res.status(400).send("Invalid Client Details");
   }
 
-  optService.send(phoneNo, otpSenerId, async function (err, data) {
+  optService.send(mobileNo, otpSenerId, async function (err, data) {
     const db = await getDb();
-    if (data.type != "error") {
-      const user = await db.collection("user").findOne({ phoneNo });
+    if (data.type !== "error") {
+      const user = await db.collection("user").findOne({ mobileNo });
       if (!user) {
         return res.status(200).send({ newUser: true });
       } else {

@@ -1,9 +1,10 @@
-import { getDb } from "../db.js";
+import { getDb, ObjectId } from "../db.js";
 import { decodeJWT } from "../helpers/create-decode-jwt.js";
 
 // Used only once for a new account creation it requires jwt
-export const authPhoneNoMiddleware = async (req, res, next) => {
+export const authIdMiddleware = async (req, res, next) => {
   const db = await getDb();
+
   try {
     // Splitting Token from bearer <token>
     const token = req.headers.authorization.split(" ")[1];
@@ -18,12 +19,12 @@ export const authPhoneNoMiddleware = async (req, res, next) => {
     try {
       const user = await await db
         .collection("user")
-        .findOne({ phoneNo: decodedToken });
+        .findOne({ _id: ObjectId(decodedToken) });
       if (!user) {
         return res.status(401).send("Error in User Auth");
       }
 
-      req.phoneNo = decodedToken;
+      req._id = decodedToken;
       next();
     } catch (e) {
       console.log(e);

@@ -6,9 +6,9 @@ const checkUser = async () => {
   console.log(userExists);
 };
 
-const deleteUser = async (phoneNo) => {
+const deleteUser = async (mobileNo) => {
   const db = await getDb();
-  const deletedUser = await db.collection("user").findOneAndDelete({ phoneNo });
+  const deletedUser = await db.collection("user").findOneAndDelete({ mobileNo });
   console.log(deletedUser);
 };
 

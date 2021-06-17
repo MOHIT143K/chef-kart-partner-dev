@@ -1,1 +1,1 @@
-export const isValidPhoneNo = (phoneNo) => /^\d{10}$/.test(phoneNo);
+export const isValidMobileNo = (mobileNo) => /^\d{10}$/.test(mobileNo);
