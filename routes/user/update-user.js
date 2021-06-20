@@ -14,7 +14,6 @@ export const updateUser = async (req, res) => {
     fullName,
     emailId,
     profession,
-    profilePicUrl,
     updatedAt: Date.now(),
   };
 
@@ -27,7 +26,7 @@ export const updateUser = async (req, res) => {
         { returnDocument: "after" }
       );
 
-    return res.status(200).json({ user: updatedUser });
+    return res.status(200).json({ user: updatedUser.value });
   } catch (error) {
     console.log(error);
     return res.status(500).send("Server Error!");
