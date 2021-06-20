@@ -3,7 +3,7 @@ import { getDb, ObjectId } from "../../db.js";
 export const createLead = async (req, res) => {
   const db = await getDb();
 
-  const { fullName, mobileNo, householdType, society, sector, shiftDate, leadType } = req.body;
+  const { fullName, mobileNo, householdType, society, sector, shiftDate, requirementNeeded } = req.body;
   const lead = {
     fullName, 
     mobileNo, 
@@ -11,7 +11,7 @@ export const createLead = async (req, res) => {
     society, 
     sector, 
     shiftDate, 
-    leadType, 
+    requirementNeeded, 
     createdBy: ObjectId(req.id),
     createdAt: Date.now(), 
     updatedAt: Date.now()

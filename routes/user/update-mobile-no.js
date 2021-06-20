@@ -4,11 +4,7 @@ export const updateUser = async (req, res) => {
   const db = await getDb();
   const userId = req._id;
 
-  const { fullName, emailId, profession } = req.body;
-
-  if (!(fullName && emailId && profession)) {
-    return res.status(400).send("Invalid Details");
-  }
+  const { mobileNo } = req.body;
 
   const userToUpdate = {
     fullName,
@@ -26,10 +22,14 @@ export const updateUser = async (req, res) => {
         { $set: { ...userToUpdate } },
         { returnDocument: "after" }
       );
-
+      
     return res.status(200).json({ user: updatedUser });
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Server Error!");
+    if (error.code === 11000) {
+      return res.status(422).send("Duplicate Lead");
+    }
   }
+
+  return res.status(200).send("Just for checking");
 };

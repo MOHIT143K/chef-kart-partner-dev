@@ -10,6 +10,8 @@ const {
   OTP_AUTH_KEY: OTPAuthKey,
   OTP_SENDER_ID: otpSenerId,
   JWT_SECRET_KEY: jwtSecretKey,
+  UPLOAD_CLOUD_NAME: uploadCloudName,
+  UPLOAD_PRESET: uploadPreset,
 } = process.env || {};
 
 const optService = new sendOtpMSG91(
@@ -19,4 +21,12 @@ const optService = new sendOtpMSG91(
 
 const mongoConnectionString = `mongodb+srv://${dbUser}:${dbPassword}@${dbHost}/${dbName}`;
 
-export { dbName, otpSenerId, optService, mongoConnectionString, jwtSecretKey };
+export {
+  dbName,
+  otpSenerId,
+  optService,
+  mongoConnectionString,
+  jwtSecretKey,
+  uploadCloudName,
+  uploadPreset
+};

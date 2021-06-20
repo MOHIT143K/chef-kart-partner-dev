@@ -24,10 +24,15 @@ export const authIdMiddleware = async (req, res, next) => {
         return res.status(401).send("Error in User Auth");
       }
 
+      // Here after authenticating the user we are attaching the
+      // _id, mobileNo in request so that it can be used later in
+      // further callback
+
       req._id = decodedToken;
+      req.mobileNo = user.mobileNo;
+
       next();
     } catch (e) {
-      console.log(e);
       return res.status(401).send("Unauthorized");
     }
   } catch (e) {}
