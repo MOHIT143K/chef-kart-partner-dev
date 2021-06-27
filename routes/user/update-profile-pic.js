@@ -4,7 +4,7 @@ import { getDb, ObjectId } from "../../db.js";
 
 export const updateProfilePic = async (req, res) => {
   const db = await getDb();
-  const userId = req._id;
+  const { userId } = req;
 
   const { profilePicBase64 } = req.body;
 
@@ -28,7 +28,7 @@ export const updateProfilePic = async (req, res) => {
 
     return res.status(200).json({ user: updatedUser.value });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(400).send(error.message);
   }
 };

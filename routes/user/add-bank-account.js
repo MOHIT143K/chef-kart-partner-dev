@@ -1,4 +1,4 @@
-import { getDb, ObjectId } from "../../db.js";
+import { getDb } from "../../db.js";
 import { optService } from "../../config/config.js";
 
 export const addBankAccount = async (req, res) => {
@@ -20,7 +20,7 @@ export const addBankAccount = async (req, res) => {
         accountHolderName,
         ifscCode,
         bankName,
-        createdBy: ObjectId(userId),
+        createdBy: userId,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };

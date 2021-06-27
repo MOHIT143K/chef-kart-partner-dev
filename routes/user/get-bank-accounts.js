@@ -1,18 +1,21 @@
 import { getDb } from "../../db.js";
 
-export const getLeads = async (req, res) => {
+export const getBankAccounts = async (req, res) => {
   const db = await getDb();
   const { userId } = req;
   const { offset = 0, limit = 10 } = req.query;
   try {
-    const leads = await db
-      .collection("lead")
+    const bankAccounts = await db
+      .collection("bank-account")
       .find({ createdBy: userId })
       .skip(Number(offset))
       .limit(Number(limit))
       .toArray();
 
-    return res.status(200).json({ leads });
+    bankAccounts.forEach((bankAccount) => {
+      bankAccount.accountNo = bankAccount.accountNumber.slice(0, 4) + "*******";
+    });
+    return res.status(200).json({ bankAccounts });
   } catch (e) {
     console.log(e);
     return res.status(500).send(e.message);

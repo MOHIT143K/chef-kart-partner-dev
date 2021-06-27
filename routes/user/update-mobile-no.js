@@ -1,35 +1,33 @@
 import { getDb, ObjectId } from "../../db.js";
+import { optService } from "../../config/config.js";
 
-export const updateUser = async (req, res) => {
+export const updateMobileNo = async (req, res) => {
   const db = await getDb();
-  const userId = req._id;
+  const { mobileNo, otp } = req.body;
+  const { userId } = req;
 
-  const { mobileNo } = req.body;
+  //Node-MSG91 Client
+  optService.verify(mobileNo, otp, async function (err, response) {
+    if (response.type == "error") {
+      return res.status(400).send(response.message);
+    } else {
+      try {
+        const user = await db
+          .collection("user")
+          .findOneAndUpdate(
+            { _id: ObjectId(userId) },
+            { $set: { updatedAt: Date.now(), mobileNo } },
+            { returnDocument: "after" }
+          );
 
-  const userToUpdate = {
-    fullName,
-    emailId,
-    profession,
-    profilePicUrl,
-    updatedAt: Date.now(),
-  };
-
-  try {
-    const updatedUser = await db
-      .collection("user")
-      .findOneAndUpdate(
-        { _id: ObjectId(userId) },
-        { $set: { ...userToUpdate } },
-        { returnDocument: "after" }
-      );
-      
-    return res.status(200).json({ user: updatedUser });
-  } catch (error) {
-    console.log(error);
-    if (error.code === 11000) {
-      return res.status(422).send("Duplicate Lead");
+        if (!user) {
+          return res.status(404).send("User Not Present");
+        }
+        return res.status(200).json({ updatedMobileNo: user.value.mobileNo });
+      } catch (e) {
+        console.log(e);
+        return res.status(500).send(e.message);
+      }
     }
-  }
-
-  return res.status(200).send("Just for checking");
+  });
 };

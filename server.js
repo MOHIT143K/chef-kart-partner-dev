@@ -34,7 +34,7 @@ initDb(function (err) {
     throw err;
   } else {
     server.listen(port, () => {
-      console.log(`Backend running on ${port}`)
+      console.log(`Backend running on ${port}`);
     });
   }
 });

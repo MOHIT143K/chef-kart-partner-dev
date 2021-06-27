@@ -2,7 +2,7 @@ import { getDb, ObjectId } from "../../db.js";
 
 export const updateUser = async (req, res) => {
   const db = await getDb();
-  const userId = req._id;
+  const { userId } = req;
 
   const { fullName, emailId, profession } = req.body;
 

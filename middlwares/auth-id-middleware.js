@@ -28,12 +28,15 @@ export const authIdMiddleware = async (req, res, next) => {
       // _id, mobileNo in request so that it can be used later in
       // further callback
 
-      req._id = decodedToken;
+      req.userId = decodedToken;
       req.mobileNo = user.mobileNo;
 
       next();
     } catch (e) {
       return res.status(401).send("Unauthorized");
     }
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+    return res.status(401).send("Unauthorized");
+  }
 };

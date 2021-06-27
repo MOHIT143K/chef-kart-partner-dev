@@ -17,7 +17,8 @@ export const verifyOTP = async (req, res) => {
           fullName: null,
           emailId: null,
           profession: null,
-          profilePicUrl: null,
+          profilePic: null,
+          defaultAccountId: null,
           accountCreatedAt: Date.now(),
           updatedAt: Date.now(),
         };
