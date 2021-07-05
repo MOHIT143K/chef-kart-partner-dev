@@ -15,6 +15,8 @@ export const decodeJWT = (token) => {
   }
 };
 
-export const createJWT = (dataToEncode) => {
-  return jwt.sign({ data: dataToEncode }, jwtSecretKey);
+export const createJWT = (dataToEncode, expiresIn = 2592000) => {
+  return jwt.sign({ data: dataToEncode }, jwtSecretKey, {
+    expiresIn,
+  });
 };

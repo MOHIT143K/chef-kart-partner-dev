@@ -14,6 +14,8 @@ import { fetchUser } from "./routes/user/fetch-user.js";
 import { updateMobileNo } from "./routes/user/update-mobile-no.js";
 import { updateDefaultBankAccount } from "./routes/user/update-default-bank-account.js";
 import { getLeads } from "./routes/user/get-leads.js";
+import { adminLogin } from "./routes/auth/admin-login.js";
+import { fetchDashboard } from "./routes/admin/fetch-dashboard.js";
 
 const cache = (duration) => {
   return (req, res, next) => {
@@ -61,4 +63,7 @@ export default (app) => {
     authIdMiddleware,
     updateDefaultBankAccount
   );
+
+  app.post("/auth/admin-login", adminLogin);
+  app.get("/admin/fetch-dashboard", authIdMiddleware, fetchDashboard);
 };
