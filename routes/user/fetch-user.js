@@ -39,7 +39,7 @@ export const fetchUser = async (req, res) => {
       ])
       .toArray();
 
-    const { totalEarnedAmount } = paymentAggregationResponse[0] || {};
+    const { totalEarnedAmount = 0} = paymentAggregationResponse[0] || {};
 
     return res
       .status(200)
