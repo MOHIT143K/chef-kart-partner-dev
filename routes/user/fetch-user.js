@@ -39,12 +39,13 @@ export const fetchUser = async (req, res) => {
       ])
       .toArray();
 
-    const { totalEarnedAmount } = paymentAggregationResponse[0];
+    const { totalEarnedAmount } = paymentAggregationResponse[0] || {};
 
     return res
       .status(200)
       .json({ user, leads, leadsCount, bankAccounts, totalEarnedAmount, jwt });
   } catch (error) {
+    console.log(error)
     return res.status(500).send("Server Error!");
   }
 };
