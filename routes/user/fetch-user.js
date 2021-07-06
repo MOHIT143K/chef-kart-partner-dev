@@ -26,24 +26,38 @@ export const fetchUser = async (req, res) => {
     const leads = await leadsResponse.toArray();
     const leadsCount = await leadsResponse.count();
 
-    const paymentAggregationResponse = await db
+    const paidAggregationResponse = await db
       .collection("lead")
       .aggregate([
-        { $match: { createdBy: userId } },
+        { $match: { createdBy: userId, status: 'bank_added' } },
         {
           $group: {
-            _id: null,
+            _id: 'status',
             totalEarnedAmount: { $sum: "$payment.amount" },
           },
-        },
+        }
       ])
       .toArray();
 
-    const { totalEarnedAmount = 0} = paymentAggregationResponse[0] || {};
+    const walletAddedAggregationResponse = await db
+    .collection("lead")
+    .aggregate([
+      { $match: { createdBy: userId, status: 'wallet_added' } },
+      {
+        $group: {
+          _id: null,
+          totalWalletAmount: { $sum: "$payment.amount" },
+        },
+      },
+    ])
+      .toArray();
+
+    const { totalEarnedAmount = 0 } = paidAggregationResponse[0] || {};
+    const { totalWalletAmount = 0 } = walletAddedAggregationResponse[0] || {};
 
     return res
       .status(200)
-      .json({ user, leads, leadsCount, bankAccounts, totalEarnedAmount, jwt });
+      .json({ jwt, user, leads, leadsCount, bankAccounts, totalEarnedAmount, totalWalletAmount });
   } catch (error) {
     console.log(error)
     return res.status(500).send("Server Error!");
