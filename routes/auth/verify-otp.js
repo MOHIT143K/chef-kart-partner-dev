@@ -1,6 +1,7 @@
 import { getDb } from "../../db.js";
 import { optService } from "../../config/config.js";
 import { createJWT } from "../../helpers/create-decode-jwt.js";
+import { fetchUserAdditional } from "../../controllers/fetch-user-additional.js";
 
 export const verifyOTP = async (req, res) => {
   const db = await getDb();
@@ -20,7 +21,7 @@ export const verifyOTP = async (req, res) => {
           profilePic: null,
           defaultAccountId: null,
           accountCreatedAt: Date.now(),
-          updatedAt: Date.now(),
+          updatedAt: Date.now()
         };
 
         try {
@@ -29,7 +30,9 @@ export const verifyOTP = async (req, res) => {
             .insertOne(userNode);
           const user = createdUserNode.ops[0];
           const JWTForClient = createJWT(user["_id"]);
-          return res.status(200).json({ jwt: JWTForClient, user });
+          const { totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount } = await fetchUserAdditional(user["_id"]);
+
+          return res.status(200).json({ jwt: JWTForClient, user, totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount });
         } catch (error) {
           if (error.code === 11000) {
             return res.status(422).send("User Already Exists!");
@@ -53,7 +56,9 @@ export const verifyOTP = async (req, res) => {
           }
 
           const JWTForClient = createJWT(user["_id"]);
-          return res.status(200).json({ jwt: JWTForClient, user });
+          const { totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount } = await fetchUserAdditional(user["_id"]);
+
+          return res.status(200).json({ jwt: JWTForClient, user, totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount });
         } catch (error) {
           console.log(error);
           return res.status(500).send("Server Error!");
