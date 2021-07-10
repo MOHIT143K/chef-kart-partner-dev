@@ -56,7 +56,7 @@ export const verifyOTP = async (req, res) => {
           }
 
           const JWTForClient = createJWT(user["_id"]);
-          const { totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount } = await fetchUserAdditional(user["_id"]);
+          const { totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount } = await fetchUserAdditional(`${user["_id"]}`);
 
           return res.status(200).json({ jwt: JWTForClient, user, totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount });
         } catch (error) {
