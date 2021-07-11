@@ -39,7 +39,7 @@ export const createLead = async (req, res) => {
   } catch (error) {
     console.log(error);
     if (error.code === 11000) {
-      return res.status(422).send("Duplicate Lead");
+      return res.status(422).json({error: "Duplicate Lead"});
     }
   }
 
