@@ -69,7 +69,7 @@ export default (app) => {
 
   app.post("/auth/admin-login", adminLogin);
   app.post("/admin/fetch-dashboard", authIdMiddleware, fetchDashboard);
-  app.get("/admin/get-leads", authIdMiddleware, adminGetLeads);
+  app.post("/admin/get-leads", authIdMiddleware, adminGetLeads);
   app.post("/admin/update-leads", authIdMiddleware, adminUpdateLead);
   app.delete("/admin/delete-lead", authIdMiddleware, adminDeleteLead);
 
