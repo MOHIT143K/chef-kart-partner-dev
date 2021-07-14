@@ -88,7 +88,7 @@ export const fetchDashboard = async (req, res) => {
           { "$count": "Total" }
         ],
         "leadsConverted": [
-          { "$match" : {"createdAt": { "$gte": fromTimeStamp, "$lte": toTimeStamp }}},
+          { "$match" : {"status":{"$ne":"pending"}, "createdAt": { "$gte": fromTimeStamp, "$lte": toTimeStamp }}},
           { "$count": "Total" }
         ],
         "bankAdded": [

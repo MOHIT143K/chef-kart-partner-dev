@@ -19,6 +19,7 @@ import { fetchDashboard } from "./routes/admin/fetch-dashboard.js";
 import { adminGetLeads } from "./routes/admin/get-leads.js";
 import { adminUpdateLead } from "./routes/admin/update-lead.js";
 import { adminDeleteLead } from "./routes/admin/delete-lead.js";
+import { adminGetLeadFullDetails } from "./routes/admin/get-lead-full-details.js";
 
 const cache = (duration) => {
   return (req, res, next) => {
@@ -70,6 +71,7 @@ export default (app) => {
   app.post("/auth/admin-login", adminLogin);
   app.post("/admin/fetch-dashboard", authIdMiddleware, fetchDashboard);
   app.post("/admin/get-leads", authIdMiddleware, adminGetLeads);
+  app.post("/admin/get-lead-full-details", authIdMiddleware, adminGetLeadFullDetails);
   app.post("/admin/update-leads", authIdMiddleware, adminUpdateLead);
   app.delete("/admin/delete-lead", authIdMiddleware, adminDeleteLead);
 
