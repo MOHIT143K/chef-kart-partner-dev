@@ -1,29 +1,14 @@
 import { getDb, ObjectId } from "../../db.js";
 export const adminUpdateLead = async (req, res) => {
   const db = await getDb();
-  const { fullName, mobileNo, householdType, society,
-    sector,shiftDate,requirementNeeded,leadId, status, payment
-  } = req.body;
-
-  const lead = {
-    fullName,
-    mobileNo,
-    householdType,
-    society,
-    sector,
-    shiftDate,
-    requirementNeeded,
-    status,
-    payment,
-    updatedAt: Date.now(),
-  };
-
+  const leadId = req.body._id;
+  delete req.body['_id'];
   try {
     const updatedLead = await db
       .collection("lead")
       .findOneAndUpdate(
         { _id: ObjectId(leadId) },
-        { $set: { ...lead } },
+        { $set: { ...req.body } },
         { returnDocument: "after" }
       );
     if (!updatedLead.value) {
