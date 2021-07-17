@@ -15,13 +15,13 @@ export const sendOTP = async (req, res) => {
       }
     } else {
       console.log(data);
-      return res.status(500).send(data.message);
+      return res.status(500).json({error: data.message});
     }
   };
 
   const otpSent = sendOTPHelper(mobileNo, sendOTPCallback);
 
   if (!otpSent) {
-    return res.status(400).send("Invalid Client Details");
+    return res.status(400).json({error: "Invalid Client Details"});
   }
 };

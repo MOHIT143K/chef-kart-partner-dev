@@ -16,6 +16,6 @@ export const fetchUser = async (req, res) => {
       .json({ jwt, user, leads, leadsCount, bankAccounts, totalEarnedAmount, totalWalletAmount });
   } catch (error) {
     console.log(error)
-    return res.status(500).send("Server Error!");
+    return res.status(500).json({error: "Server Error!"});
   }
 };

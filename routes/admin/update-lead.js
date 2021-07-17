@@ -12,7 +12,7 @@ export const adminUpdateLead = async (req, res) => {
         { returnDocument: "after" }
       );
     if (!updatedLead.value) {
-      return res.status(404).send("Not Found");
+      return res.status(404).json({error: "Not Found"});
     }
     return res.status(200).json({ lead: updatedLead.value });
   } catch (error) {

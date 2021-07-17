@@ -8,7 +8,7 @@ export const addBankAccount = async (req, res) => {
     req.body;
 
   if (!(accountNumber && accountHolderName && ifscCode && bankName && otp)) {
-    return res.status(400).send("Invalid Client Details");
+    return res.status(400).json({error: "Invalid Client Details"});
   }
 
   optService.verify(mobileNo, otp, async function (err, response) {
@@ -33,10 +33,10 @@ export const addBankAccount = async (req, res) => {
         return res.status(200).json({ bankAccount });
       } catch (error) {
         if (error.code === 11000) {
-          return res.status(422).send("Bank Account Already Exists!");
+          return res.status(422).json({error: "Bank Account Already Exists!"});
         }
         console.log(error);
-        return res.status(500).send("Server Error!");
+        return res.status(500).json({error: "Server Error!"});
       }
     }
   });

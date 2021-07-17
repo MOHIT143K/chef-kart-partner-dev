@@ -13,7 +13,7 @@ export const authIdMiddleware = async (req, res, next) => {
     const decodedToken = decodeJWT(token);
 
     if (!decodedToken) {
-      return res.status(400).send("Invalid Request");
+      return res.status(400).json({error: "Invalid Request"});
     }
 
     try {
@@ -22,7 +22,7 @@ export const authIdMiddleware = async (req, res, next) => {
           .collection("admin-accounts")
           .findOne({ _id: ObjectId(decodedToken) });
         if (!adminAccount) {
-          return res.status(401).send("Error in Admin Auth");
+          return res.status(401).json({error: "Error in Admin Auth"});
         }
       } else {
         const user = await await db.collection("user").findOneAndUpdate(
@@ -33,7 +33,7 @@ export const authIdMiddleware = async (req, res, next) => {
           { returnDocument: "after" }
         );
         if (!user) {
-          return res.status(401).send("Error in User Auth");
+          return res.status(401).json({error: "Error in User Auth"});
         }
         req.mobileNo = user.value.mobileNo;
       }
@@ -44,10 +44,10 @@ export const authIdMiddleware = async (req, res, next) => {
       // further callback
       next();
     } catch (e) {
-      return res.status(401).send("Unauthorized");
+      return res.status(401).json({error: "Unauthorized"});
     }
   } catch (e) {
     console.log(e);
-    return res.status(401).send("Unauthorized");
+    return res.status(401).json({error: "Unauthorized"});
   }
 };

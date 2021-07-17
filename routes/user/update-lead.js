@@ -30,10 +30,10 @@ export const updateLead = async (req, res) => {
         { returnDocument: "after" }
       );
     if (!updatedLead.value) {
-      return res.status(404).send("Not Found");
+      return res.status(404).json({eroor: "Not Found"});
     }
     return res.status(200).json({ lead: updatedLead.value });
   } catch (error) {
-    return res.status(400).send(error.message);
+    return res.status(400).json({error: error.message});
   }
 };

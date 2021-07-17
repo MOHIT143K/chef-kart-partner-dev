@@ -7,7 +7,7 @@ export const updateUser = async (req, res) => {
   const { fullName, emailId, profession } = req.body;
 
   if (!(fullName && emailId && profession)) {
-    return res.status(400).send("Invalid Details");
+    return res.status(400).json({error: "Invalid Details"});
   }
 
   const userToUpdate = {
@@ -28,7 +28,6 @@ export const updateUser = async (req, res) => {
 
     return res.status(200).json({ user: updatedUser.value });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send("Server Error!");
+    return res.status(500).json({error: "Server Error!"});
   }
 };

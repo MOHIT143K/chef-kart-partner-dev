@@ -5,7 +5,7 @@ export const deleteBankAccount = async (req, res) => {
   const { accountId } = req.body;
 
   if (!accountId) {
-    return res.status(400).send("Invalid Client Details");
+    return res.status(400).json({error: "Invalid Client Details"});
   }
 
   try {
@@ -14,12 +14,12 @@ export const deleteBankAccount = async (req, res) => {
       .findOneAndDelete({ _id: ObjectId(accountId) });
 
     if (!deletedBankAccount.value) {
-      return res.status(404).send("Not Found");
+      return res.status(404).json({error: "Not Found"});
     }
 
-    return res.status(200).send("Deleted Successfully!");
+    return res.status(200).json({error: "Deleted Successfully!"});
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Server Error!");
+    return res.status(500).json({error: "Server Error!"});
   }
 };

@@ -5,7 +5,7 @@ export const adminDeleteLead = async (req, res) => {
   const { leadId } = req.body;
 
   if (!leadId) {
-    return res.status(400).send("Invalid Client Details");
+    return res.status(400).json({error: "Invalid Client Details"});
   }
 
   try {
@@ -14,12 +14,12 @@ export const adminDeleteLead = async (req, res) => {
       .findOneAndDelete({ _id: ObjectId(leadId) });
 
     if (!deletedLead.value) {
-      return res.status(404).send("Not Found");
+      return res.status(404).json({error: "Not Found"});
     }
 
-    return res.status(200).send("Deleted Lead Successfully!");
+    return res.status(200).json({error: "Deleted Lead Successfully!"});
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Server Error!");
+    return res.status(500).send({error: "Server Error!"});
   }
 };

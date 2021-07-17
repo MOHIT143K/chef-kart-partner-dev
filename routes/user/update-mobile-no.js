@@ -21,12 +21,15 @@ export const updateMobileNo = async (req, res) => {
           );
 
         if (!user) {
-          return res.status(404).send("User Not Present");
+          return res.status(404).json({error: "User Not Present"});
         }
         return res.status(200).json({ updatedMobileNo: user.value.mobileNo });
-      } catch (e) {
-        console.log(e);
-        return res.status(500).send(e.message);
+      } catch (error) {
+        if(error.code === 11000){
+          return res.status(422).json({error: 'Duplicate Lead'});
+        }else{
+          return res.status(422).json({error: 'Server Error'});
+        }
       }
     }
   });

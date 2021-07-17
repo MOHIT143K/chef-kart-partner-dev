@@ -35,10 +35,10 @@ export const verifyOTP = async (req, res) => {
           return res.status(200).json({ jwt: JWTForClient, user, totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount });
         } catch (error) {
           if (error.code === 11000) {
-            return res.status(422).send("User Already Exists!");
+            return res.status(422).json({error: "User Already Exists!"});
           }
           console.log(error);
-          return res.status(500).send("Server Error!");
+          return res.status(500).json({error: "Server Error!"});
         }
       } else {
         try {
@@ -52,7 +52,7 @@ export const verifyOTP = async (req, res) => {
           const user = fetchedUserNode.value;
 
           if (!user) {
-            return res.status(404).send("User Not Present");
+            return res.status(404).json({error: "User Not Present"});
           }
 
           const JWTForClient = createJWT(user["_id"]);
@@ -61,7 +61,7 @@ export const verifyOTP = async (req, res) => {
           return res.status(200).json({ jwt: JWTForClient, user, totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount });
         } catch (error) {
           console.log(error);
-          return res.status(500).send("Server Error!");
+          return res.status(500).json({error: "Server Error!"});
         }
       }
     }

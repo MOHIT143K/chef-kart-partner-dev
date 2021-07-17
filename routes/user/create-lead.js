@@ -35,13 +35,11 @@ export const createLead = async (req, res) => {
 
   try {
     await db.collection("lead").insertOne(lead);
-    return res.status(200).send("Lead Created");
+    return res.status(200).json({message: "Lead Created"});
   } catch (error) {
     console.log(error);
     if (error.code === 11000) {
       return res.status(422).json({error: "Duplicate Lead"});
     }
   }
-
-  return res.status(200).send("Just for checking");
 };
