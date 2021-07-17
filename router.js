@@ -72,7 +72,7 @@ export default (app) => {
   app.post("/admin/fetch-dashboard", authIdMiddleware, fetchDashboard);
   app.post("/admin/get-leads", authIdMiddleware, adminGetLeads);
   app.post("/admin/get-lead-full-details", authIdMiddleware, adminGetLeadFullDetails);
-  app.post("/admin/update-leads", authIdMiddleware, adminUpdateLead);
+  app.post("/admin/update-lead", authIdMiddleware, adminUpdateLead);
   app.delete("/admin/delete-lead", authIdMiddleware, adminDeleteLead);
 
 };

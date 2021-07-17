@@ -2,7 +2,7 @@ import { getDb, ObjectId } from "../../db.js";
 export const adminUpdateLead = async (req, res) => {
   const db = await getDb();
   const { fullName, mobileNo, householdType, society,
-    sector,shiftDate,requirementNeeded,leadId, status
+    sector,shiftDate,requirementNeeded,leadId, status, payment
   } = req.body;
 
   const lead = {
@@ -14,11 +14,7 @@ export const adminUpdateLead = async (req, res) => {
     shiftDate,
     requirementNeeded,
     status,
-    payment: {
-        amount: 0,
-        paidDate: null,
-        paidAccount: null,
-      },
+    payment,
     updatedAt: Date.now(),
   };
 
