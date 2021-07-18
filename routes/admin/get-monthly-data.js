@@ -8,7 +8,7 @@ export const getMonthlyData = async (req, res) => {
   const fromTimeStamp = startDate ? new Date(`${startDate.split('-')[0]}-01-${startDate.split('-')[1]}`).getTime(): Date.now() - 86400000*30;
   const toTimeStamp = endDate ? new Date(`${endDate.split('-')[0]}-01-${endDate.split('-')[1]}`).getTime(): Date.now();
 
-  const fields = ['_id', 'mobileNo', 'fullName', 'sector', 'requirementNeeded', 'createdAt','updatedAt','payment.status' ,'payment.amount'];
+  const fields = ['_id', 'mobileNo', 'fullName', 'sector', 'requirementNeeded', 'createdAt','updatedAt','status' ,'payment.amount'];
   const opts = { fields };
   
   

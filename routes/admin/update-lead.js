@@ -8,7 +8,7 @@ export const adminUpdateLead = async (req, res) => {
       .collection("lead")
       .findOneAndUpdate(
         { _id: ObjectId(leadId) },
-        { $set: { ...req.body } },
+        { $set: { ...req.body, updatedAt: Date.now() } },
         { returnDocument: "after" }
       );
     if (!updatedLead.value) {
