@@ -10,7 +10,7 @@ export const verifyOTP = async (req, res) => {
   //Node-MSG91 Client
   optService.verify(mobileNo, otp, async function (err, response) {
     if (response.type == "error") {
-      return res.status(400).send(response.message);
+      return res.status(400).json({error: "Wrong OTP"});
     } else {
       if (newUser) {
         const userNode = {
