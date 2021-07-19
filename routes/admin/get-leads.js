@@ -8,6 +8,7 @@ export const adminGetLeads = async (req, res) => {
     const leads = await db
       .collection("lead")
       .find({ status: { '$in': leadsToShow }})
+      .sort({updatedAt: -1 })
       .skip(Number(offset))
       .limit(Number(limit))
       .toArray();

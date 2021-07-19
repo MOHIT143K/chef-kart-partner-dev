@@ -13,6 +13,7 @@ export const getLeads = async (req, res) => {
     const leads = await db
       .collection("lead")
       .find({ createdBy: userId, updatedAt: {$gte: fromTimeStamp, $lte: toTimeStamp} })
+      .sort({ createdAt: -1})
       .skip(Number(offset))
       .limit(Number(limit))
       .toArray();

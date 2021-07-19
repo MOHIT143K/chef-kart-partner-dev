@@ -16,6 +16,7 @@ export const getMonthlyData = async (req, res) => {
     const leads = await db
       .collection("lead")
       .find({ createdAt: {$gte: fromTimeStamp, $lte: toTimeStamp} })
+      .sort({updatedAt: -1 })
       .skip(Number(offset))
       .limit(Number(limit))
       .toArray();
