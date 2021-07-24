@@ -28,6 +28,7 @@
     "json2csv": "^5.0.6",
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "^0.2.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.9",
     "morgan": "^1.10.0",
     "sendotp": "^1.2.9"

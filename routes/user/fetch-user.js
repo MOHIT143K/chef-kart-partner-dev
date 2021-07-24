@@ -9,13 +9,29 @@ export const fetchUser = async (req, res) => {
     const user = await db.collection("user").findOne({ _id: ObjectId(userId) });
     const jwt = createJWT(user["_id"]);
 
-    const { totalEarnedAmount, totalWalletAmount, bankAccounts, leads, leadsCount } = await fetchUserAdditional(userId);
+    const {
+      totalEarnedAmount,
+      totalWalletAmount,
+      bankAccounts,
+      leads,
+      leadsCount,
+      notifications,
+    } = await fetchUserAdditional(userId);
 
     return res
       .status(200)
-      .json({ jwt, user, leads, leadsCount, bankAccounts, totalEarnedAmount, totalWalletAmount });
+      .json({
+        jwt,
+        user,
+        leads,
+        leadsCount,
+        bankAccounts,
+        totalEarnedAmount,
+        totalWalletAmount,
+        notifications,
+      });
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({error: "Server Error!"});
+    console.log(error);
+    return res.status(500).json({ error: "Server Error!" });
   }
 };

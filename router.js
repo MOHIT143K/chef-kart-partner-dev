@@ -21,6 +21,7 @@ import { adminUpdateLead } from "./routes/admin/update-lead.js";
 import { adminDeleteLead } from "./routes/admin/delete-lead.js";
 import { adminGetLeadFullDetails } from "./routes/admin/get-lead-full-details.js";
 import { getMonthlyData } from "./routes/admin/get-monthly-data.js";
+import { getNotifications } from "./routes/user/get-notifications.js";
 
 const cache = (duration) => {
   return (req, res, next) => {
@@ -52,6 +53,7 @@ export default (app) => {
   app.post(`/user/verify-otp`, verifyOTP);
   app.get(`/user/fetch-user`, authIdMiddleware, fetchUser);
   app.get(`/user/get-leads`, authIdMiddleware, getLeads);
+  app.get(`/user/get-notifications`, authIdMiddleware, getNotifications);
   app.post(`/user/create-lead`, authIdMiddleware, createLead);
   app.post(`/user/update-lead`, authIdMiddleware, updateLead);
 
@@ -73,8 +75,11 @@ export default (app) => {
   app.post("/admin/fetch-dashboard", authIdMiddleware, fetchDashboard);
   app.get("/admin/get-monthly-data", authIdMiddleware, getMonthlyData);
   app.post("/admin/get-leads", authIdMiddleware, adminGetLeads);
-  app.post("/admin/get-lead-full-details", authIdMiddleware, adminGetLeadFullDetails);
+  app.post(
+    "/admin/get-lead-full-details",
+    authIdMiddleware,
+    adminGetLeadFullDetails
+  );
   app.post("/admin/update-lead", authIdMiddleware, adminUpdateLead);
   app.delete("/admin/delete-lead", authIdMiddleware, adminDeleteLead);
-
 };
