@@ -4,11 +4,35 @@ import { optService } from "../../config/config.js";
 export const addBankAccount = async (req, res) => {
   const db = await getDb();
   const { userId, mobileNo } = req;
-  const { accountNumber, accountHolderName, ifscCode, bankName, otp } =
-    req.body;
+  const {
+    accountNumber,
+    verifyAccountNumber,
+    accountHolderName,
+    ifscCode,
+    bankName,
+    otp,
+  } = req.body;
+  if (
+    !(
+      accountNumber &&
+      accountHolderName &&
+      verifyAccountNumber &&
+      ifscCode &&
+      bankName &&
+      otp
+    )
+  ) {
+    return res.status(400).json({ error: "Invalid Client Details" });
+  }
 
-  if (!(accountNumber && accountHolderName && ifscCode && bankName && otp)) {
-    return res.status(400).json({error: "Invalid Client Details"});
+  if (accountNumber.length < 9) {
+    return res.status(400).json({ error: "Invalid Account Number" });
+  }
+
+  if (accountNumber !== verifyAccountNumber) {
+    return res
+      .status(400)
+      .json({ error: "Confirm Account Number Mismatching" });
   }
 
   optService.verify(mobileNo, otp, async function (err, response) {
@@ -33,10 +57,12 @@ export const addBankAccount = async (req, res) => {
         return res.status(200).json({ bankAccount });
       } catch (error) {
         if (error.code === 11000) {
-          return res.status(422).json({error: "Bank Account Already Exists!"});
+          return res
+            .status(422)
+            .json({ error: "Bank Account Already Exists!" });
         }
         console.log(error);
-        return res.status(500).json({error: "Server Error!"});
+        return res.status(500).json({ error: "Server Error!" });
       }
     }
   });
