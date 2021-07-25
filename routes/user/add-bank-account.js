@@ -37,7 +37,7 @@ export const addBankAccount = async (req, res) => {
 
   optService.verify(mobileNo, otp, async function (err, response) {
     if (response.type == "error") {
-      return res.status(400).send(response.message);
+      return res.status(400).json({ error: response.message });
     } else {
       const bankAccountDetails = {
         accountNumber,

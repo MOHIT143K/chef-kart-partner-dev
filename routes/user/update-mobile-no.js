@@ -9,7 +9,7 @@ export const updateMobileNo = async (req, res) => {
   //Node-MSG91 Client
   optService.verify(mobileNo, otp, async function (err, response) {
     if (response.type == "error") {
-      return res.status(400).send(response.message);
+      return res.status(400).json({ error: response.message });
     } else {
       try {
         const user = await db
@@ -21,14 +21,14 @@ export const updateMobileNo = async (req, res) => {
           );
 
         if (!user) {
-          return res.status(404).json({error: "User Not Present"});
+          return res.status(404).json({ error: "User Not Present" });
         }
         return res.status(200).json({ updatedMobileNo: user.value.mobileNo });
       } catch (error) {
-        if(error.code === 11000){
-          return res.status(422).json({error: 'Duplicate Lead'});
-        }else{
-          return res.status(422).json({error: 'Server Error'});
+        if (error.code === 11000) {
+          return res.status(422).json({ error: "Duplicate Lead" });
+        } else {
+          return res.status(422).json({ error: "Server Error" });
         }
       }
     }

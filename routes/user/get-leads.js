@@ -36,6 +36,6 @@ export const getLeads = async (req, res) => {
     return res.status(200).json({ leads });
   } catch (error) {
     console.log(error);
-    return res.status(500).send({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };

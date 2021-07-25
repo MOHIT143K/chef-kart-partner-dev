@@ -9,9 +9,9 @@ export const sendOTP = async (req, res) => {
     if (data.type !== "error") {
       const user = await db.collection("user").findOne({ mobileNo });
       if (!user) {
-        return res.status(200).send({ newUser: true });
+        return res.status(200).json({ newUser: true });
       } else {
-        return res.status(200).send({ newUser: false });
+        return res.status(200).json({ newUser: false });
       }
     } else {
       console.log(data);

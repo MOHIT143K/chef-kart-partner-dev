@@ -12,18 +12,18 @@ export const adminLogin = async (req, res) => {
     });
 
     if (!adminUser) {
-      return res.status(401).json({error: "Unauthorized!"});
+      return res.status(401).json({ error: "Unauthorized!" });
     }
 
     const match = await bcrypt.compare(password, adminUser.password);
     if (!match) {
-      return res.status(401).json({error: "Unauthorized!"});
+      return res.status(401).json({ error: "Unauthorized!" });
     } else {
       const JWTForAdminClient = createJWT(adminUser._id);
-      return res.status(200).send({ admin: email, jwt: JWTForAdminClient });
+      return res.status(200).json({ admin: email, jwt: JWTForAdminClient });
     }
   } catch (e) {
     console.log(e);
-    return res.status(400).json({error: "Invalid Details"});
+    return res.status(400).json({ error: "Invalid Details" });
   }
 };

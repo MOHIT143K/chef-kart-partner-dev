@@ -37,8 +37,8 @@ export const getNotifications = async (req, res) => {
       });
 
     return res.status(200).json({ notifications });
-  } catch (e) {
-    console.log(e);
-    return res.status(500).send(e.message);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error.message });
   }
 };
