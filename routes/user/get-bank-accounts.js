@@ -13,7 +13,8 @@ export const getBankAccounts = async (req, res) => {
       .toArray();
 
     bankAccounts.forEach((bankAccount) => {
-      bankAccount.accountNo = bankAccount.accountNumber.slice(0, 4) + "*******";
+      bankAccount.accountNo =  "*******" + bankAccount.accountNumber.slice(-4);
+      delete bankAccount["accountNumber"]
     });
     return res.status(200).json({ bankAccounts });
   } catch (error) {
