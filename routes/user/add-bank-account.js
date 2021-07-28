@@ -59,7 +59,7 @@ export const addBankAccount = async (req, res) => {
         if (error.code === 11000) {
           return res
             .status(422)
-            .json({ error: "Bank Account Already Exists!" });
+            .json({ error: "bank_already_exists" });
         }
         console.log(error);
         return res.status(500).json({ error: "Server Error!" });
