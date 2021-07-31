@@ -5,14 +5,8 @@ export const getLeads = async (req, res) => {
   const { userId } = req;
   const { offset = 0, limit = 10, startDate, endDate, type } = req.query;
 
-  const fromTimeStamp = startDate
-    ? new Date(
-        `${startDate.split("-")[0]}-01-${startDate.split("-")[1]}`
-      ).getTime()
-    : 0;
-  const toTimeStamp = endDate
-    ? new Date(`${endDate.split("-")[0]}-01-${endDate.split("-")[1]}`).getTime()
-    : Date.now();
+  const fromTimeStamp = startDate ? Number(startDate) : 0;
+  const toTimeStamp = endDate ? Number(endDate): Date.now();
 
   const leadTypes = type
     ? type === "paid"
