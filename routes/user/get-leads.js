@@ -6,13 +6,22 @@ export const getLeads = async (req, res) => {
   const { offset = 0, limit = 10, startDate, endDate, type } = req.query;
 
   const fromTimeStamp = startDate ? Number(startDate) : 0;
-  const toTimeStamp = endDate ? Number(endDate): Date.now();
+  const toTimeStamp = endDate ? Number(endDate) : Date.now();
 
-  const leadTypes = type
-    ? type === "paid"
-      ? ["wallet_added", "bank_added"]
-      : ["pending"]
-    : ["pending", "bank_failed", "wallet_added", "bank_added", "cancelled"];
+  // By Default we search for all leads
+  let leadTypes = [
+    "pending",
+    "bank_failed",
+    "wallet_added",
+    "bank_added",
+    "cancelled",
+  ];
+
+  if (type === "paid") {
+    leadTypes = ["wallet_added", "bank_added"];
+  } else if (type === "pending") {
+    leadTypes = ["pending"];
+  }
 
   try {
     const leads = await db
