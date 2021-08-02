@@ -36,7 +36,7 @@ export const addBankAccount = async (req, res) => {
   }
 
   optService.verify(mobileNo, otp, async function (err, response) {
-    if (response.type == "error") {
+    if (response.type === "error") {
       return res.status(400).json({ error: response.message });
     } else {
       const bankAccountDetails = {
@@ -53,13 +53,18 @@ export const addBankAccount = async (req, res) => {
         const createdBankAccountNode = await db
           .collection("bank-account")
           .insertOne(bankAccountDetails);
+
         const bankAccount = createdBankAccountNode.ops[0];
-        return res.status(200).json({ bankAccount });
+        return res.status(200).json({
+          bankAccount: {
+            ...bankAccount,
+            accountNumber: `*******${bankAccount.accountNumber.slice(-4)}`,
+            accountNo: `*******${bankAccount.accountNumber.slice(-4)}`,
+          },
+        });
       } catch (error) {
         if (error.code === 11000) {
-          return res
-            .status(422)
-            .json({ error: "bank_already_exists" });
+          return res.status(422).json({ error: "bank_already_exists" });
         }
         console.log(error);
         return res.status(500).json({ error: "Server Error!" });
